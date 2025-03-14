@@ -16,7 +16,7 @@ class Product {
     if (this._id) {
       dbOp = db
         .collection("products")
-        .updateOne({ _id: new ObjectId(this._id) },{$set:this});
+        .updateOne({ _id: new ObjectId(this._id) }, { $set: this });
     } else {
       dbOp = db.collection("products").insertOne(this);
     }
@@ -52,6 +52,19 @@ class Product {
       .then((product) => {
         console.log(product);
         return product;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  static deleteById(id) {
+    const db = getDb();
+    return db
+      .collection("products")
+      .deleteOne({ _id: new ObjectId(id) })
+      .then(result => {
+        console.log('Deleted')
       })
       .catch((err) => {
         console.log(err);
